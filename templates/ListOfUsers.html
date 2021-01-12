@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+
+<form action="/users/add" method="GET">
+    <input type="submit" value="Add user"/>
+</form>
+
+<!--<#assign array = '[{"name":"Joe","id":1},{"name":"Fred","id":2}]'>-->
+<!--<#assign object = array?eval[0]>-->
+<!--<#list object?keys as key>"${key}":"${object[key]}"-->
+<!--</#list>-->
+
+<#if userLists??>
+<#list userLists as userList>
+<table>
+    <tr>
+        <td>${userList.userId}</td>
+        <td>${userList.firstName}</td>
+        <td>${userList.lastName}</td>
+        <td>${userList.salary}</td>
+        <td>${userList.birth}</td>
+        <td>
+            <form action="/users" method="POST">
+                <input type="hidden" name="delUser" value=${userList.userId} />
+                <input type="submit" value="DelUser"/>
+            </form>
+        </td>
+
+    </tr>
+</table>
+</#list>
+<#else>
+No users
+</#if>
+
+</body>
+</html>
