@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--<meta http-equiv="Content-Type" content="text/html; charset=cp1251" />-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,35 +11,52 @@
     <input type="submit" value="Add user"/>
 </form>
 
-<!--<#assign array = '[{"name":"Joe","id":1},{"name":"Fred","id":2}]'>-->
-<!--<#assign object = array?eval[0]>-->
-<!--<#list object?keys as key>"${key}":"${object[key]}"-->
-<!--</#list>-->
+<form action="/users" method="GET">
+    <#if searchUsers??>
+        <input type="text" name="searchUsers" value=${searchUsers} />
+    <#else>
+        <input type="text" name="searchUsers" />
+    </#if>
+    <input type="submit" value="SearchUsers"/>
+</form>
+
+<form action="/users" method="GET">
+    <input type="submit" value="CleanSearch"/>
+</form>
 
 <#if userLists??>
 <#list userLists as userList>
 <table>
     <tr>
-        <td>${userList.userId}</td>
-        <td>${userList.firstName}</td>
-        <td>${userList.lastName}</td>
-        <td>${userList.salary}</td>
-        <td>${userList.birth}</td>
-        <td>
-            <form action="/users" method="POST">
-                <input type="hidden" name="delUser" value=${userList.userId} />
-                <input type="submit" value="DelUser"/>
-            </form>
-            <form action="/users/edit" method="GET">
-                <input type="hidden" name="editUserId" value=${userList.userId} />
-                <input type="hidden" name="editUserFirstName" value=${userList.firstName} />
-                <input type="hidden" name="editUserLastName" value=${userList.lastName} />
-                <input type="hidden" name="editUserSalary" value=${userList.salary} />
-                <input type="hidden" name="editUserBirth" value=${userList.birth} />
-                <input type="submit" value="EditUser"/>
-            </form>
-        </td>
-
+        <#if searchUsers??>
+            <#if userList.firstName?lower_case?contains(searchUsers?lower_case) || userList.lastName?lower_case?contains(searchUsers?lower_case)>
+                <td>${userList.userId}</td>
+                <td>${userList.firstName}</td>
+                <td>${userList.lastName}</td>
+                <td>${userList.salary}</td>
+                <td>${userList.birth}</td>
+            </#if>
+        <#else>
+            <td>${userList.userId}</td>
+            <td>${userList.firstName}</td>
+            <td>${userList.lastName}</td>
+            <td>${userList.salary}</td>
+            <td>${userList.birth}</td>
+            <td>
+                <form action="/users" method="POST">
+                    <input type="hidden" name="delUser" value=${userList.userId} />
+                    <input type="submit" value="DelUser"/>
+                </form>
+                <form action="/users/edit" method="GET">
+                    <input type="hidden" name="editUserId" value=${userList.userId} />
+                    <input type="hidden" name="editUserFirstName" value=${userList.firstName} />
+                    <input type="hidden" name="editUserLastName" value=${userList.lastName} />
+                    <input type="hidden" name="editUserSalary" value=${userList.salary} />
+                    <input type="hidden" name="editUserBirth" value=${userList.birth} />
+                    <input type="submit" value="EditUser"/>
+                </form>
+            </td>
+        </#if>
     </tr>
 </table>
 </#list>

@@ -18,10 +18,14 @@ public class ListOfUsersServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Map<String, Object> mapHTTP = new HashMap<>();
-
+        String searchUsers = req.getParameter("searchUsers");
         if (listOfUsers.size()>0) {
             mapHTTP.put("userLists", listOfUsers);
         }
+        if (searchUsers != null){
+            mapHTTP.put("searchUsers", searchUsers);
+        }
+
 
 //        mapHTTP.put("message", "");
         //mapHTTP.put("userLists", "hello");
