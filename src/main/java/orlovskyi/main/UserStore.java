@@ -45,4 +45,20 @@ public class UserStore {
     public String getBirth(){
         return this.birth;
     }
+
+    public void setFirstName(String fName){
+        this.firstName = fName;
+    }
+
+    public void setLastName(String lName){
+        this.lastName = lName;
+    }
+
+    public void setSalary(int sal){
+        this.salary = sal;
+    }
+
+    public void setBirth(String bDay){
+        this.birth = bDay;
+    }
 }

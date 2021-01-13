@@ -29,6 +29,14 @@
                 <input type="hidden" name="delUser" value=${userList.userId} />
                 <input type="submit" value="DelUser"/>
             </form>
+            <form action="/users/edit" method="GET">
+                <input type="hidden" name="editUserId" value=${userList.userId} />
+                <input type="hidden" name="editUserFirstName" value=${userList.firstName} />
+                <input type="hidden" name="editUserLastName" value=${userList.lastName} />
+                <input type="hidden" name="editUserSalary" value=${userList.salary} />
+                <input type="hidden" name="editUserBirth" value=${userList.birth} />
+                <input type="submit" value="EditUser"/>
+            </form>
         </td>
 
     </tr>

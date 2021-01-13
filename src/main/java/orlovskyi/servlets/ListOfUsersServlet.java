@@ -36,6 +36,7 @@ public class ListOfUsersServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //List<Object> userList = createUserList(req);
         String delUser = req.getParameter("delUser");
+        String editUser = req.getParameter("editUserId");
         if (delUser != null){
             for(int i=0; i<listOfUsers.size(); i++){
                 userStore = (UserStore) listOfUsers.get(i);
@@ -46,6 +47,13 @@ public class ListOfUsersServlet extends HttpServlet {
                 //listOfUsers.remove(listOfUsers.indexOf(delUser));
             }
             //listOfUsers.remove(Integer.parseInt(delUser));
+        } else if(editUser !=null){
+            for(int i=0; i<listOfUsers.size(); i++){
+                userStore = (UserStore) listOfUsers.get(i);
+                if (editUser.equals(userStore.getUserId())){
+                    editUserInList(req, i);
+                }
+            }
         } else {
             createUserList(req);
         }
@@ -60,7 +68,9 @@ public class ListOfUsersServlet extends HttpServlet {
 
         Map<String, Object> mapHTTP = new HashMap<>();
         //mapHTTP.put(String.valueOf(i++), userList.get(userList.size()-1));
-        mapHTTP.put("userLists", listOfUsers);
+        if (listOfUsers.size() > 0){
+            mapHTTP.put("userLists", listOfUsers);
+        }
 
         String message = req.getParameter("message");
 
@@ -94,6 +104,17 @@ public class ListOfUsersServlet extends HttpServlet {
         listOfUsers.add(new UserStore(i.toString(), firstName, lastName, salary, birth));
         i++;
         return listOfUsers;
+    }
+
+    private void editUserInList(HttpServletRequest request, int index){
+        String firstName = request.getParameter("first_name");
+        String lastName = request.getParameter("last_name");
+        int salary = Integer.parseInt(request.getParameter("salary"));
+        String birth = request.getParameter("birth");
+        userStore.setFirstName(firstName);
+        userStore.setLastName(lastName);
+        userStore.setSalary(salary);
+        userStore.setBirth(birth);
     }
 
 //    private static Map<String, Object> createMapFromRequest(HttpServletRequest request){
