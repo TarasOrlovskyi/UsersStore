@@ -12,7 +12,7 @@ public class UserStore {
 //    private Date dateOfBirth;
     private String birth;
 
-    public UserStore(String id, String fName, String lName, int salary, String bDay){
+    public UserStore(String id, String fName, String lName, int salary, String bDay) {
         this.userId = id;
         this.firstName = fName;
         this.lastName = lName;
@@ -22,19 +22,19 @@ public class UserStore {
         this.birth = bDay;
     }
 
-    public String getUserId(){
+    public String getUserId() {
         return this.userId;
     }
 
-    public String getFirstName(){
+    public String getFirstName() {
         return this.firstName;
     }
 
-    public String getLastName(){
+    public String getLastName() {
         return this.lastName;
     }
 
-    public int getSalary(){
+    public int getSalary() {
         return this.salary;
     }
 
@@ -42,23 +42,23 @@ public class UserStore {
 //        return this.dateOfBirth;
 //    }
 
-    public String getBirth(){
+    public String getBirth() {
         return this.birth;
     }
 
-    public void setFirstName(String fName){
+    public void setFirstName(String fName) {
         this.firstName = fName;
     }
 
-    public void setLastName(String lName){
+    public void setLastName(String lName) {
         this.lastName = lName;
     }
 
-    public void setSalary(int sal){
+    public void setSalary(int sal) {
         this.salary = sal;
     }
 
-    public void setBirth(String bDay){
+    public void setBirth(String bDay) {
         this.birth = bDay;
     }
 }

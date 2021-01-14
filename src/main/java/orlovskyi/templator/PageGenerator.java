@@ -12,12 +12,12 @@ import java.util.Map;
 
 public class PageGenerator {
     private static final String HTML_DIR = "templates";
-    
+
     private static PageGenerator pageGenerator;
     private final Configuration cfg;
 
-    public static PageGenerator getInstance(){
-        if (pageGenerator == null){
+    public static PageGenerator getInstance() {
+        if (pageGenerator == null) {
             pageGenerator = new PageGenerator();
         }
         return pageGenerator;
@@ -34,7 +34,7 @@ public class PageGenerator {
         return stream.toString();
     }
 
-    private PageGenerator(){
+    private PageGenerator() {
         cfg = new Configuration();
     }
 }

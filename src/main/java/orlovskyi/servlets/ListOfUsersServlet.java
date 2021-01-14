@@ -12,23 +12,19 @@ import java.util.*;
 
 public class ListOfUsersServlet extends HttpServlet {
     private UserStore userStore;
-    Integer i=1;
+    Integer i = 1;
     List<Object> listOfUsers = new LinkedList<>();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Map<String, Object> mapHTTP = new HashMap<>();
         String searchUsers = req.getParameter("searchUsers");
-        if (listOfUsers.size()>0) {
+        if (listOfUsers.size() > 0) {
             mapHTTP.put("userLists", listOfUsers);
         }
-        if (searchUsers != null){
+        if (searchUsers != null) {
             mapHTTP.put("searchUsers", searchUsers);
         }
-
-
-//        mapHTTP.put("message", "");
-        //mapHTTP.put("userLists", "hello");
 
         resp.getWriter().println(PageGenerator.getInstance().getPage("ListOfUsers.html", mapHTTP));
 
@@ -38,62 +34,38 @@ public class ListOfUsersServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //List<Object> userList = createUserList(req);
         String delUser = req.getParameter("delUser");
         String editUser = req.getParameter("editUserId");
-        if (delUser != null){
-            for(int i=0; i<listOfUsers.size(); i++){
+        if (delUser != null) {
+            for (int i = 0; i < listOfUsers.size(); i++) {
                 userStore = (UserStore) listOfUsers.get(i);
-                if (delUser.equals(userStore.getUserId())){
+                if (delUser.equals(userStore.getUserId())) {
                     listOfUsers.remove(i);
                     break;
                 }
-                //listOfUsers.remove(listOfUsers.indexOf(delUser));
             }
-            //listOfUsers.remove(Integer.parseInt(delUser));
-        } else if(editUser !=null){
-            for(int i=0; i<listOfUsers.size(); i++){
+        } else if (editUser != null) {
+            for (int i = 0; i < listOfUsers.size(); i++) {
                 userStore = (UserStore) listOfUsers.get(i);
-                if (editUser.equals(userStore.getUserId())){
-                    editUserInList(req, i);
+                if (editUser.equals(userStore.getUserId())) {
+                    editUserInList(req);
                 }
             }
         } else {
             createUserList(req);
         }
-//        String str;
-//
-//        for (int i = 0; i < userList.size(); i++) {
-//            userStore = (UserStore) userList.get(i);
-//            str = userStore.getFirstName();
-//        }
-
-        //Map<String, Object> mapHTTP = createMapFromRequest(req);
 
         Map<String, Object> mapHTTP = new HashMap<>();
-        //mapHTTP.put(String.valueOf(i++), userList.get(userList.size()-1));
-        if (listOfUsers.size() > 0){
+        if (listOfUsers.size() > 0) {
             mapHTTP.put("userLists", listOfUsers);
         }
 
-        String message = req.getParameter("message");
-
         resp.setContentType("text/html;charset=utf-8");
-
-        if (message == null || message.isEmpty()) {
-            resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        } else {
-            resp.setStatus(HttpServletResponse.SC_OK);
-        }
-        mapHTTP.put("message", message==null ? "" : message);
 
         resp.getWriter().println(PageGenerator.getInstance().getPage("ListOfUsers.html", mapHTTP));
     }
 
-    private List<Object> createUserList(HttpServletRequest request){
-        //List<Object> listOfUsers = new LinkedList<>();
-        //User Id: <input type="number" name="user_id"/>
-        //String userId = request.getParameter("user_id");
+    private List<Object> createUserList(HttpServletRequest request) {
         String firstName = request.getParameter("first_name");
         String lastName = request.getParameter("last_name");
         int salary = Integer.parseInt(request.getParameter("salary"));
@@ -101,7 +73,6 @@ public class ListOfUsersServlet extends HttpServlet {
 //        int month = Integer.parseInt(request.getParameter("month"));
 //        int day = Integer.parseInt(request.getParameter("day"));
         String birth = request.getParameter("birth");
-
         //Integer userID = listOfUsers.size();
         //Integer.parseInt(userId);
         //listOfUsers.add(new UserStore(userID.toString(), firstName, lastName, salary, birth));
@@ -110,7 +81,7 @@ public class ListOfUsersServlet extends HttpServlet {
         return listOfUsers;
     }
 
-    private void editUserInList(HttpServletRequest request, int index){
+    private void editUserInList(HttpServletRequest request) {
         String firstName = request.getParameter("first_name");
         String lastName = request.getParameter("last_name");
         int salary = Integer.parseInt(request.getParameter("salary"));
@@ -120,14 +91,4 @@ public class ListOfUsersServlet extends HttpServlet {
         userStore.setSalary(salary);
         userStore.setBirth(birth);
     }
-
-//    private static Map<String, Object> createMapFromRequest(HttpServletRequest request){
-//        Map<String, Object> requestMap = new HashMap<>();
-//        requestMap.put("method", request.getMethod());
-//        requestMap.put("URL", request.getRequestURL().toString());
-//        requestMap.put("pathInfo", request.getPathInfo());
-//        requestMap.put("sessionId", request.getSession().getId());
-//        requestMap.put("parameters", request.getParameterMap().toString());
-//        return requestMap;
-//    }
 }

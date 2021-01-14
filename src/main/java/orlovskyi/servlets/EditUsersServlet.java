@@ -22,11 +22,6 @@ public class EditUsersServlet extends HttpServlet {
         resp.setStatus(HttpServletResponse.SC_OK);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-    }
-
     private static Map<String, Object> createMapFormRequest(HttpServletRequest request){
         Map<String, Object> mapRequest = new HashMap<>();
         mapRequest.put("editUserId", request.getParameter("editUserId"));
