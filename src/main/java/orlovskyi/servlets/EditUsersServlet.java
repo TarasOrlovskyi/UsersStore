@@ -1,12 +1,14 @@
 package orlovskyi.servlets;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import orlovskyi.templator.PageGenerator;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +30,8 @@ public class EditUsersServlet extends HttpServlet {
         mapRequest.put("editUserFirstName", request.getParameter("editUserFirstName"));
         mapRequest.put("editUserLastName", request.getParameter("editUserLastName"));
         //Integer sal = Integer.parseInt(request.getParameter("editUserSalary"));
+        //String sal = java.net.URLDecoder.decode(request.getParameter("editUserSalary"), StandardCharsets.UTF_8);
+        //String sal1 = sal.replaceAll("\\s+","");
         mapRequest.put("editUserSalary", request.getParameter("editUserSalary"));
         mapRequest.put("editUserBirth", request.getParameter("editUserBirth"));
         return mapRequest;

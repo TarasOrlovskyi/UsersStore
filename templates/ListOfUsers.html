@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Users</title>
+    <link rel="stylesheet" href="E:\style.css" type="text/css">
 </head>
 <body>
 
@@ -24,19 +25,36 @@
     <input type="submit" value="CleanSearch"/>
 </form>
 
-<#if userLists??>
-    <#list userLists as userList>
-        <table>
-            <tr>
-                <#if searchUsers??>
-                    <#if userList.firstName?lower_case?contains(searchUsers?lower_case) || userList.lastName?lower_case?contains(searchUsers?lower_case)>
+<table>
+    <tr><th colspan="6">Users store table</th></tr>
+    <#if userLists??>
+        <#list userLists as userList>
+            <#if searchUsers??>
+                <#if userList.firstName?lower_case?contains(searchUsers?lower_case) || userList.lastName?lower_case?contains(searchUsers?lower_case)>
+                    <tr>
                         <td>${userList.userId}</td>
                         <td>${userList.firstName}</td>
                         <td>${userList.lastName}</td>
                         <td>${userList.salary}</td>
                         <td>${userList.birth}</td>
-                    </#if>
-                <#else>
+                        <td>
+                            <form action="/users" method="POST">
+                                <input type="hidden" name="delUser" value=${userList.userId} />
+                                <input type="submit" value="DelUser"/>
+                            </form>
+                            <form action="/users/edit" method="GET" accept-charset="UTF-8">
+                                <input type="hidden" name="editUserId" value=${userList.userId} />
+                                <input type="hidden" name="editUserFirstName" value="${userList.firstName}" />
+                                <input type="hidden" name="editUserLastName" value="${userList.lastName}" />
+                                <input type="hidden" name="editUserSalary" value="${userList.salary}" />
+                                <input type="hidden" name="editUserBirth" value="${userList.birth}" />
+                                <input type="submit" value="EditUser"/>
+                            </form>
+                        </td>
+                    </tr>
+                </#if>
+            <#else>
+                <tr>
                     <td>${userList.userId}</td>
                     <td>${userList.firstName}</td>
                     <td>${userList.lastName}</td>
@@ -56,13 +74,13 @@
                             <input type="submit" value="EditUser"/>
                         </form>
                     </td>
-                </#if>
-            </tr>
-        </table>
-    </#list>
-<#else>
-    No users
-</#if>
+                </tr>
+            </#if>
+        </#list>
+    <#else>
+        No users
+    </#if>
+</table>
 
 </body>
 </html>
