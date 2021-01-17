@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+</head>
+<body>
+
+<form action="/users/search" method="GET">
+    <input type="text" name="searchUsers" value="${searchUsers}" />
+    <input type="submit" value="SearchUsers"/>
+</form>
+
+<form action="/users" method="GET">
+    <input type="submit" value="StartPage"/>
+</form>
+
+<table>
+    <tr><th colspan="6">Found results</th></tr>
+    <#list listOfSearchedUsers as searchedUser>
+        <tr>
+            <td>${searchedUser.userId}</td>
+            <td>${searchedUser.firstName}</td>
+            <td>${searchedUser.lastName}</td>
+            <td>${searchedUser.salary}</td>
+            <td>${searchedUser.birth}</td>
+            <td>
+                <form action="/users/remove" method="POST">
+                    <input type="hidden" name="delUserId" value=${searchedUser.userId} />
+                    <input type="hidden" name="searchUsers" value="${searchUsers}" />
+                    <input type="submit" value="DelUser"/>
+                </form>
+                <form action="/users/edit" method="GET" accept-charset="UTF-8">
+                    <input type="hidden" name="editUserId" value=${searchedUser.userId} />
+                    <input type="hidden" name="editUserFirstName" value="${searchedUser.firstName}" />
+                    <input type="hidden" name="editUserLastName" value="${searchedUser.lastName}" />
+                    <input type="hidden" name="editUserSalary" value="${searchedUser.salary}" />
+                    <input type="hidden" name="editUserBirth" value="${searchedUser.birth}" />
+                    <input type="hidden" name="searchUsers" value="${searchUsers}" />
+                    <input type="submit" value="EditUser"/>
+                </form>
+            </td>
+        </tr>
+    </#list>
+</table>
+
+</body>
+</html>

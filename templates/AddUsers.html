@@ -7,14 +7,11 @@
 </head>
 <body>
 
-<form action="/users" method="POST">
+<form action="/users/add" method="POST">
     First Name: <input type="text" name="first_name"/>
     Last Name: <input type="text" name="last_name"/>
     Salary: <input type="number" name="salary" min="0"/>
     Date of birth:
-<!--    <input type="number" name="year" placeholder="Year"/>-->
-<!--    <input type="number" name="month" placeholder="Month"/>-->
-<!--    <input type="number" name="day" placeholder="Day"/>-->
     <input type="date" name="birth">
     <input type="submit" value="Add user"/>
 </form>

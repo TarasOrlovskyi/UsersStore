@@ -7,16 +7,16 @@
 </head>
 <body>
 
-<form action="/users" method="POST" accept-charset="UTF-8">
+<form action="/users/edit" method="POST" accept-charset="UTF-8">
     First Name: <input type="text" name="first_name" value="${editUserFirstName}" />
     Last Name: <input type="text" name="last_name" value="${editUserLastName}" />
     Salary: <input type="number" name="salary" min="0" value="${editUserSalary}" />
     Date of birth:
-    <!--    <input type="number" name="year" placeholder="Year"/>-->
-    <!--    <input type="number" name="month" placeholder="Month"/>-->
-    <!--    <input type="number" name="day" placeholder="Day"/>-->
     <input type="date" name="birth" value="${editUserBirth}" />
     <input type="hidden" name="editUserId" value="${editUserId}" />
+    <#if searchUsers??>
+        <input type="hidden" name="searchUsers" value="${searchUsers}" />
+    </#if>
     <input type="submit" value="Edit user"/>
 </form>
 
