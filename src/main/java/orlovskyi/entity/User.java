@@ -1,8 +1,8 @@
-package orlovskyi.main;
+package orlovskyi.entity;
 
 import java.time.LocalDate;
 
-public class Users {
+public class User {
     private long userId;
     private String firstName;
     private String lastName;

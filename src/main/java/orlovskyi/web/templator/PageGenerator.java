@@ -1,4 +1,4 @@
-package orlovskyi.templator;
+package orlovskyi.web.templator;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.HashMap;
 import java.util.Map;
 
 public class PageGenerator {
@@ -21,6 +22,10 @@ public class PageGenerator {
             pageGenerator = new PageGenerator();
         }
         return pageGenerator;
+    }
+
+    public String getPage(String filename){
+        return getPage(filename, new HashMap<>());
     }
 
     public String getPage(String filename, Map<String, Object> data) {

@@ -1,9 +1,9 @@
-package orlovskyi.servlets;
+package orlovskyi.web.servlets;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
-import orlovskyi.main.Users;
-import orlovskyi.templator.PageGenerator;
+import orlovskyi.entity.User;
+import orlovskyi.web.templator.PageGenerator;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -12,8 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 public class EditUsersServlet extends HttpServlet {
+    private List<User> listOfUsers;
 
-    private Users users;
+    public EditUsersServlet(List<User> listOfUsers){
+        this.listOfUsers = listOfUsers;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -28,23 +31,18 @@ public class EditUsersServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession ses = req.getSession();
-        List<Object> listOfUsers = (List<Object>) ses.getAttribute("listOfUsers");
-        long editUserId = Long.valueOf(req.getParameter("editUserId"));
-        for (int i = 0; i < listOfUsers.size(); i++) {
-            users = (Users) listOfUsers.get(i);
-            if (editUserId == users.getUserId()) {
-                editUserInList(req);
+        long editUserId = Long.parseLong(req.getParameter("editUserId"));
+        for (User user : listOfUsers) {
+            if (editUserId == user.getUserId()) {
+                editUserInList(req, user);
+                break;
             }
         }
-
         String searchUsers = req.getParameter("searchUsers");
         if (searchUsers == null) {
             resp.sendRedirect("/users");
         } else {
-            HttpSession session = req.getSession(true);
-            session.setAttribute("searchUsers", searchUsers);
-            resp.sendRedirect("/users/search");
+            resp.sendRedirect("/users/search?searchUsers="+searchUsers);
         }
     }
 
@@ -58,14 +56,14 @@ public class EditUsersServlet extends HttpServlet {
         return userData;
     }
 
-    private void editUserInList(HttpServletRequest request) {
+    private void editUserInList(HttpServletRequest request, User user) {
         String firstName = request.getParameter("first_name");
         String lastName = request.getParameter("last_name");
         double salary = Double.parseDouble(request.getParameter("salary"));
         LocalDate birth = LocalDate.parse(request.getParameter("birth"));
-        users.setFirstName(firstName);
-        users.setLastName(lastName);
-        users.setSalary(salary);
-        users.setBirth(birth);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setSalary(salary);
+        user.setBirth(birth);
     }
 }
