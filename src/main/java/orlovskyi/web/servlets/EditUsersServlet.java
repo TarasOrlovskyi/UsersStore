@@ -2,7 +2,7 @@ package orlovskyi.web.servlets;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
-import orlovskyi.UsersTableDataBase;
+import orlovskyi.web.database.UsersTableDataBase;
 import orlovskyi.entity.User;
 import orlovskyi.web.templator.PageGenerator;
 
