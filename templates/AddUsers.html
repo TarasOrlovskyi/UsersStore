@@ -8,11 +8,11 @@
 <body>
 
 <form action="/users/add" method="POST">
-    First Name: <input type="text" name="first_name"/>
-    Last Name: <input type="text" name="last_name"/>
-    Salary: <input type="number" name="salary" min="0"/>
+    First Name: <input type="text" name="first_name" required />
+    Last Name: <input type="text" name="last_name" required />
+    Salary: <input type="number" name="salary" min="0" required />
     Date of birth:
-    <input type="date" name="birth">
+    <input type="date" name="birth" required />
     <input type="submit" value="Add user"/>
 </form>
 

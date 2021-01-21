@@ -2,6 +2,7 @@ package orlovskyi.web.servlets;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
+import orlovskyi.UsersTableDataBase;
 import orlovskyi.entity.User;
 import orlovskyi.web.templator.PageGenerator;
 
@@ -12,19 +13,12 @@ import java.util.List;
 import java.util.Map;
 
 public class EditUsersServlet extends HttpServlet {
-    private List<User> listOfUsers;
-
-    public EditUsersServlet(List<User> listOfUsers){
-        this.listOfUsers = listOfUsers;
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Map<String, Object> usersData = createMapFormRequest(req);
         usersData.put("searchUsers", req.getParameter("searchUsers"));
-
         resp.getWriter().println(PageGenerator.getInstance().getPage("EditUsers.html", usersData));
-
         resp.setContentType("text/html;charset=utf-8");
         resp.setStatus(HttpServletResponse.SC_OK);
     }
@@ -32,9 +26,12 @@ public class EditUsersServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         long editUserId = Long.parseLong(req.getParameter("editUserId"));
-        for (User user : listOfUsers) {
+        UsersTableDataBase usersTable = new UsersTableDataBase();
+        List<User> allUsers = usersTable.selectAllUsersFromDataBase();
+        for (User user : allUsers) {
             if (editUserId == user.getUserId()) {
                 editUserInList(req, user);
+                usersTable.editUserIntoDataBase(user);
                 break;
             }
         }

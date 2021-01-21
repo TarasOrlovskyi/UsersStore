@@ -48,4 +48,14 @@ public class User {
     public void setBirth(LocalDate birth) {
         this.birth = birth;
     }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + ": {" +
+                userId + ", " +
+                firstName + ", " +
+                lastName + ", " +
+                salary + ", " +
+                birth + "}";
+    }
 }
