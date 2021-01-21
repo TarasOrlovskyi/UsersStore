@@ -1,4 +1,4 @@
-package orlovskyi.web.database;
+package orlovskyi.database;
 
 import orlovskyi.entity.User;
 

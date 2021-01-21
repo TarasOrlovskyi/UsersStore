@@ -4,7 +4,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import orlovskyi.web.database.UsersTableDataBase;
+import orlovskyi.database.UsersTableDataBase;
 import orlovskyi.entity.User;
 
 import java.io.IOException;
