@@ -1,33 +1,24 @@
 package orlovskyi.web.servlets;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import orlovskyi.database.UsersTableDataBase;
-import orlovskyi.entity.User;
+import orlovskyi.service.UserService;
+import orlovskyi.service.impl.DefaultUserService;
 
 import java.io.IOException;
-import java.util.List;
 
 public class RemoveUsersServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UsersTableDataBase userTable = new UsersTableDataBase();
-        List<User> userList = userTable.selectAllUsersFromDataBase();
-        long userId = Long.parseLong(req.getParameter("delUserId"));
-        for (User users : userList) {
-            if (userId == users.getUserId()) {
-                userTable.removeUserFromDataBase(users);
-                break;
-            }
-        }
-        String searchUsers = req.getParameter("searchUsers");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        UserService userService = new DefaultUserService();
+        userService.removeUser(Long.parseLong(request.getParameter("delUserId")));
+        String searchUsers = request.getParameter("searchUsers");
         if (searchUsers == null) {
-            resp.sendRedirect("/users");
+            response.sendRedirect("/users");
         } else {
-            resp.sendRedirect("/users/search?searchUsers="+searchUsers);
+            response.sendRedirect("/users/search?searchUsers="+searchUsers);
         }
     }
 }

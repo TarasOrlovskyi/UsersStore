@@ -1,45 +1,37 @@
 package orlovskyi.web.servlets;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
-import orlovskyi.database.UsersTableDataBase;
 import orlovskyi.entity.User;
+import orlovskyi.service.UserService;
+import orlovskyi.service.impl.DefaultUserService;
 import orlovskyi.web.templator.PageGenerator;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class EditUsersServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<String, Object> usersData = createMapFormRequest(req);
-        usersData.put("searchUsers", req.getParameter("searchUsers"));
-        resp.getWriter().println(PageGenerator.getInstance().getPage("EditUsers.html", usersData));
-        resp.setContentType("text/html;charset=utf-8");
-        resp.setStatus(HttpServletResponse.SC_OK);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Map<String, Object> usersData = createMapFormRequest(request);
+        usersData.put("searchUsers", request.getParameter("searchUsers"));
+        response.getWriter().println(PageGenerator.getInstance().getPage("EditUsers.html", usersData));
+        response.setContentType("text/html;charset=utf-8");
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        long editUserId = Long.parseLong(req.getParameter("editUserId"));
-        UsersTableDataBase usersTable = new UsersTableDataBase();
-        List<User> allUsers = usersTable.selectAllUsersFromDataBase();
-        for (User user : allUsers) {
-            if (editUserId == user.getUserId()) {
-                editUserInList(req, user);
-                usersTable.editUserIntoDataBase(user);
-                break;
-            }
-        }
-        String searchUsers = req.getParameter("searchUsers");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        long editUserId = Long.parseLong(request.getParameter("editUserId"));
+        UserService userService = new DefaultUserService();
+        userService.editUser(editUserInList(request, editUserId));
+        String searchUsers = request.getParameter("searchUsers");
         if (searchUsers == null) {
-            resp.sendRedirect("/users");
+            response.sendRedirect("/users");
         } else {
-            resp.sendRedirect("/users/search?searchUsers="+searchUsers);
+            response.sendRedirect("/users/search?searchUsers="+searchUsers);
         }
     }
 
@@ -53,14 +45,13 @@ public class EditUsersServlet extends HttpServlet {
         return userData;
     }
 
-    private void editUserInList(HttpServletRequest request, User user) {
-        String firstName = request.getParameter("first_name");
-        String lastName = request.getParameter("last_name");
-        double salary = Double.parseDouble(request.getParameter("salary"));
-        LocalDate birth = LocalDate.parse(request.getParameter("birth"));
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setSalary(salary);
-        user.setBirth(birth);
+    private User editUserInList(HttpServletRequest request, long userId) {
+        User user = new User();
+        user.setUserId(userId);
+        user.setFirstName(request.getParameter("first_name"));
+        user.setLastName(request.getParameter("last_name"));
+        user.setSalary(Double.parseDouble(request.getParameter("salary")));
+        user.setBirth(LocalDate.parse(request.getParameter("birth")));
+        return user;
     }
 }

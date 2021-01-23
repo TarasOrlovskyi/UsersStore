@@ -1,11 +1,11 @@
 package orlovskyi.web.servlets;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import orlovskyi.database.UsersTableDataBase;
 import orlovskyi.entity.User;
+import orlovskyi.service.UserService;
+import orlovskyi.service.impl.DefaultUserService;
 import orlovskyi.web.templator.PageGenerator;
 
 import java.io.IOException;
@@ -14,32 +14,26 @@ import java.time.LocalDate;
 public class AddUsersServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().println(PageGenerator.getInstance().getPage("AddUsers.html"));
-        resp.setContentType("text/html;charset=utf-8");
-        resp.setStatus(HttpServletResponse.SC_OK);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.getWriter().println(PageGenerator.getInstance().getPage("AddUsers.html"));
+        response.setContentType("text/html;charset=utf-8");
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UsersTableDataBase usersTable = new UsersTableDataBase();
-        User user = createUser(req, usersTable);
-        usersTable.addUserToDataBase(user);
-        resp.setContentType("text/html;charset=UTF-8");
-        resp.sendRedirect("/users");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        UserService userService = new DefaultUserService();
+        userService.addUser(createUser(request));
+        response.setContentType("text/html;charset=UTF-8");
+        response.sendRedirect("/users");
     }
 
-    private User createUser(HttpServletRequest request, UsersTableDataBase usersTable) {
+    private User createUser(HttpServletRequest request) {
         User user = new User();
-        String firstName = request.getParameter("first_name");
-        String lastName = request.getParameter("last_name");
-        double salary = Double.parseDouble(request.getParameter("salary"));
-        LocalDate birth = LocalDate.parse(request.getParameter("birth"));
-        user.setUserId(usersTable.getNextUserId());
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setSalary(salary);
-        user.setBirth(birth);
+        user.setFirstName(request.getParameter("first_name"));
+        user.setLastName(request.getParameter("last_name"));
+        user.setSalary(Double.parseDouble(request.getParameter("salary")));
+        user.setBirth(LocalDate.parse(request.getParameter("birth")));
         return user;
     }
 }

@@ -40,6 +40,6 @@ public class PageGenerator {
     }
 
     private PageGenerator() {
-        cfg = new Configuration();
+        cfg = new Configuration(Configuration.VERSION_2_3_0);
     }
 }
