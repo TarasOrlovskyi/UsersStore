@@ -1,6 +1,7 @@
 package orlovskyi;
 
 import java.io.*;
+import java.util.Properties;
 
 public class PropertyReader {
     private static final String PROPERTY_PATH = "C:/Users/240417/IdeaProjects/UsersStore/src/main/resources/application.properties";
@@ -8,53 +9,32 @@ public class PropertyReader {
     private String jdbcPassword;
     private String jdbcUrl;
 
-    public PropertyReader(){
+    public PropertyReader() {
         readProperties();
     }
 
-    private void readProperties(){
+    private void readProperties() {
+        final Properties properties = new Properties();
         File file = new File(PROPERTY_PATH);
-        String[] data = readFile(file).split("\\r\\n");
-
-        for (String property : data){
-            if (property.contains("jdbc.user")){
-                String[] param = property.split(" ");
-                jdbcUser = param[param.length-1];
-            }
-            if (property.contains("jdbc.password")){
-                String[] param = property.split(" ");
-                jdbcPassword = param[param.length-1];
-            }
-            if (property.contains("jdbc.url")){
-                String[] param = property.split(" ");
-                jdbcUrl = param[param.length-1];
-            }
+        try (InputStream inputStream = new FileInputStream(file)) {
+            properties.load(inputStream);
+            jdbcUser = properties.getProperty("jdbc.user");
+            jdbcPassword = properties.getProperty("jdbc.password");
+            jdbcUrl = properties.getProperty("jdbc.url");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    public String getJdbcUser(){
+    public String getJdbcUser() {
         return jdbcUser;
     }
 
-    public String getJdbcPassword(){
+    public String getJdbcPassword() {
         return jdbcPassword;
     }
 
-    public String getJdbcUrl(){
+    public String getJdbcUrl() {
         return jdbcUrl;
-    }
-
-    private String readFile(File file){
-        byte[] buffer = new byte[1024];
-        StringBuilder stringBuilder = new StringBuilder();
-        int byteCount = 0;
-        try (InputStream inputStream = new FileInputStream(file)){
-            while ((byteCount=inputStream.read(buffer))!=-1){
-                stringBuilder.append(new String(buffer, 0, byteCount));
-            }
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-        return stringBuilder.toString();
     }
 }
