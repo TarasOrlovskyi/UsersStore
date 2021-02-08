@@ -9,16 +9,11 @@ import orlovskyi.web.servlets.*;
 public class Main {
     public static void main(String[] args) throws Exception {
 
-//        PropertyReader propertyReader = new PropertyReader();
-//        DataSource dataSource = new DataSource(propertyReader.readProperties());
-//        UserDao userDao = new JdbcUserDao(dataSource);
-//        UserService userService = new DefaultUserService(userDao);
-
         ListOfUsersServlet listOfUsersServlet = new ListOfUsersServlet();
-        AddUsersServlet addUsersServlet = new AddUsersServlet();//(AddUsersServlet) ServiceLocator.getService(AddUsersServlet.class);
-        EditUsersServlet editUsersServlet = new EditUsersServlet();//(EditUsersServlet) ServiceLocator.getService(EditUsersServlet.class);
-        RemoveUsersServlet removeUsersServlet = new RemoveUsersServlet();//(RemoveUsersServlet) ServiceLocator.getService(RemoveUsersServlet.class);
-        SearchUsersServlet searchUsersServlet = new SearchUsersServlet();//(SearchUsersServlet) ServiceLocator.getService(SearchUsersServlet.class);
+        AddUsersServlet addUsersServlet = new AddUsersServlet();
+        EditUsersServlet editUsersServlet = new EditUsersServlet();
+        RemoveUsersServlet removeUsersServlet = new RemoveUsersServlet();
+        SearchUsersServlet searchUsersServlet = new SearchUsersServlet();
 
         ServletContextHandler contextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
         contextHandler.addServlet(new ServletHolder(listOfUsersServlet), "/users");

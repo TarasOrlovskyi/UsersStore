@@ -4,7 +4,6 @@ import jakarta.servlet.http.*;
 import orlovskyi.ServiceLocator;
 import orlovskyi.entity.User;
 import orlovskyi.service.UserService;
-import orlovskyi.service.impl.DefaultUserService;
 import orlovskyi.web.templator.PageGenerator;
 
 import java.io.IOException;
@@ -13,11 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EditUsersServlet extends HttpServlet {
-//    private UserService userService;
-//
-//    public EditUsersServlet(UserService userService){
-//        this.userService = userService;
-//    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

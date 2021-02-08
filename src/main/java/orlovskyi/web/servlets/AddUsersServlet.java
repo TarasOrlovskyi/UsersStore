@@ -6,18 +6,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import orlovskyi.ServiceLocator;
 import orlovskyi.entity.User;
 import orlovskyi.service.UserService;
-import orlovskyi.service.impl.DefaultUserService;
 import orlovskyi.web.templator.PageGenerator;
 
 import java.io.IOException;
 import java.time.LocalDate;
 
 public class AddUsersServlet extends HttpServlet {
-//    private UserService userService;
-//
-//    public AddUsersServlet(UserService userService){
-//        this.userService = userService;
-//    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

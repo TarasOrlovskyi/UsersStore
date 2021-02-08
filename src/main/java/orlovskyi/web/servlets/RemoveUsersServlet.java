@@ -5,17 +5,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import orlovskyi.ServiceLocator;
 import orlovskyi.service.UserService;
-import orlovskyi.service.impl.DefaultUserService;
 
 import java.io.IOException;
 
 public class RemoveUsersServlet extends HttpServlet {
-
-//    private UserService userService;
-//
-//    public RemoveUsersServlet(UserService userService){
-//        this.userService = userService;
-//    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {

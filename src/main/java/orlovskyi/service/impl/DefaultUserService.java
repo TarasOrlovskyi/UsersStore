@@ -1,7 +1,6 @@
 package orlovskyi.service.impl;
 
 import orlovskyi.dao.UserDao;
-import orlovskyi.dao.jdbc.JdbcUserDao;
 import orlovskyi.entity.User;
 import orlovskyi.service.UserService;
 
