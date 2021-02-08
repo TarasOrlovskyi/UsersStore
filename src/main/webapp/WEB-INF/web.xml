@@ -4,11 +4,44 @@
          version="3.0">
     <display-name>UsersStore</display-name>
     <servlet>
-        <servlet-name>ListOfUsersServlet</servlet-name>
-        <servlet-class>java.orlovskyi.web.servlets.ListOfUsersServlet</servlet-class>
+        <servlet-name>AddUsersServlet</servlet-name>
+        <servlet-class>orlovskyi.web.servlets.AddUsersServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditUsersServlet</servlet-name>
+        <servlet-class>orlovskyi.web.servlets.EditUsersServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListOfUsersServlet</servlet-name>
+        <servlet-class>orlovskyi.web.servlets.ListOfUsersServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RemoveUsersServlet</servlet-name>
+        <servlet-class>orlovskyi.web.servlets.RemoveUsersServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchUsersServlet</servlet-name>
+        <servlet-class>orlovskyi.web.servlets.SearchUsersServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AddUsersServlet</servlet-name>
+        <url-pattern>/users/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditUsersServlet</servlet-name>
+        <url-pattern>/users/edit</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ListOfUsersServlet</servlet-name>
         <url-pattern>/users</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoveUsersServlet</servlet-name>
+        <url-pattern>/users/remove</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchUsersServlet</servlet-name>
+        <url-pattern>/users/search</url-pattern>
     </servlet-mapping>
 </web-app>

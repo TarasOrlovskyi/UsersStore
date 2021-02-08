@@ -7,7 +7,7 @@ import orlovskyi.service.UserService;
 import java.util.List;
 
 public class DefaultUserService implements UserService {
-    UserDao userDao;
+    private final UserDao userDao;
 
     public DefaultUserService(UserDao userDao){
         this.userDao = userDao;

@@ -1,17 +1,18 @@
 package orlovskyi.web.servlets;
 
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import orlovskyi.ServiceLocator;
 import orlovskyi.entity.User;
 import orlovskyi.service.UserService;
 import orlovskyi.web.templator.PageGenerator;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 
 public class AddUsersServlet extends HttpServlet {
+    private UserService userService = (UserService) ServiceLocator.getService(UserService.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -22,7 +23,6 @@ public class AddUsersServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        UserService userService = (UserService) ServiceLocator.getService(UserService.class);//new DefaultUserService();
         userService.addUser(createUser(request));
         response.setContentType("text/html;charset=UTF-8");
         response.sendRedirect("/users");

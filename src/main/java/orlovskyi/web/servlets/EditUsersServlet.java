@@ -1,17 +1,20 @@
 package orlovskyi.web.servlets;
 
-import jakarta.servlet.http.*;
 import orlovskyi.ServiceLocator;
 import orlovskyi.entity.User;
 import orlovskyi.service.UserService;
 import orlovskyi.web.templator.PageGenerator;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
 public class EditUsersServlet extends HttpServlet {
+    private UserService userService = (UserService) ServiceLocator.getService(UserService.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -25,7 +28,6 @@ public class EditUsersServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         long editUserId = Long.parseLong(request.getParameter("editUserId"));
-        UserService userService = (UserService) ServiceLocator.getService(UserService.class);//new DefaultUserService();
         userService.editUser(editUserInList(request, editUserId));
         String searchUsers = request.getParameter("searchUsers");
         if (searchUsers == null) {
