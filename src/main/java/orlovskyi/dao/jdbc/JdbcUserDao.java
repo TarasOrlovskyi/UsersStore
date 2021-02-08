@@ -1,7 +1,6 @@
 package orlovskyi.dao.jdbc;
 
 import orlovskyi.DataSource;
-import orlovskyi.PropertyReader;
 import orlovskyi.dao.UserDao;
 import orlovskyi.entity.User;
 
@@ -9,21 +8,12 @@ import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DefaultUserDao implements UserDao {
-//    private final String jdbcUser;
-//    private final String jdbcPassword;
-//    private final String jdbcUrl;
-    //private DataSource dataSource = new DataSource();
+public class JdbcUserDao implements UserDao {
+    private DataSource dataSource;
 
-    public DefaultUserDao(){
-        //PropertyReader propertyReader = new PropertyReader();
-        //jdbcUser = propertyReader.getJdbcUser();
-        //jdbcPassword = propertyReader.getJdbcPassword();
-        //jdbcUrl = propertyReader.getJdbcUrl();
+    public JdbcUserDao(DataSource dataSource){
+        this.dataSource = dataSource;
     }
-    //private static final String NAME_USER = "postgres";
-    //private static final String PASSWORD = "ivasyutyak";
-    //public static final String URL = "jdbc:postgresql://localhost:5432/usersstore";
 
     private static final String INSERT_USER = "INSERT INTO users(salary, last_name, first_name, birth) VALUES(?, ?, ?, ?)";
     private static final String DEL_USER = "DELETE FROM users WHERE user_id=?";
@@ -33,7 +23,7 @@ public class DefaultUserDao implements UserDao {
 
     @Override
     public void addUser(User user) {
-        try (Connection connection = DataSource.getDataSource().getConnection(); //DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPassword);
+        try (Connection connection = dataSource.getDataSource().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER)){
             fillPrepareStatement(preparedStatement, user);
             preparedStatement.executeUpdate();
@@ -44,7 +34,7 @@ public class DefaultUserDao implements UserDao {
 
     @Override
     public void removeUser(long userId) {
-        try (Connection connection = DataSource.getDataSource().getConnection(); //DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPassword);
+        try (Connection connection = dataSource.getDataSource().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DEL_USER)){
             preparedStatement.setDouble(1, userId);
             preparedStatement.executeUpdate();
@@ -55,7 +45,7 @@ public class DefaultUserDao implements UserDao {
 
     @Override
     public void editUser(User user) {
-        try (Connection connection = DataSource.getDataSource().getConnection();//DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPassword);
+        try (Connection connection = dataSource.getDataSource().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(EDIT_USER)){
             fillPrepareStatement(preparedStatement, user);
             preparedStatement.setLong(5, user.getUserId());
@@ -68,7 +58,7 @@ public class DefaultUserDao implements UserDao {
     @Override
     public List<User> selectAllUsers() {
         List<User> userList = new LinkedList<>();
-        try (Connection connection = DataSource.getDataSource().getConnection();//DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPassword);
+        try (Connection connection = dataSource.getDataSource().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS);
              ResultSet resultSet = preparedStatement.executeQuery()){
             userList = getUsers(resultSet);
@@ -81,7 +71,7 @@ public class DefaultUserDao implements UserDao {
     @Override
     public List<User> selectSearchedUsers(String searchWord){
         List<User> usersList = new LinkedList<>();
-        try (Connection connection = DataSource.getDataSource().getConnection();//DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPassword);
+        try (Connection connection = dataSource.getDataSource().getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(SELECT_SEARCHED_USERS)){
             preparedStatement.setString(1, "%"+searchWord+"%");
             preparedStatement.setString(2, "%"+searchWord+"%");

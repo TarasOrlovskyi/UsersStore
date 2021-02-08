@@ -9,18 +9,18 @@ class PropertyReaderTest {
     @Test
     void testGetJdbcUser(){
         PropertyReader propertyReader = new PropertyReader();
-        assertEquals("postgres", propertyReader.getJdbcUser());
+        assertEquals("postgres", propertyReader.readProperties().getProperty("jdbc.user"));
     }
 
     @Test
     void testGetJdbcPassword(){
         PropertyReader propertyReader = new PropertyReader();
-        assertEquals("ivasyutyak", propertyReader.getJdbcPassword());
+        assertEquals("ivasyutyak", propertyReader.readProperties().getProperty("jdbc.password"));
     }
 
     @Test
     void testGetJdbcUrl(){
         PropertyReader propertyReader = new PropertyReader();
-        assertEquals("jdbc:postgresql://localhost:5432/usersstore", propertyReader.getJdbcUrl());
+        assertEquals("jdbc:postgresql://localhost:5432/usersstore", propertyReader.readProperties().getProperty("jdbc.url"));
     }
 }

@@ -1,14 +1,18 @@
 package orlovskyi.service.impl;
 
 import orlovskyi.dao.UserDao;
-import orlovskyi.dao.jdbc.DefaultUserDao;
+import orlovskyi.dao.jdbc.JdbcUserDao;
 import orlovskyi.entity.User;
 import orlovskyi.service.UserService;
 
 import java.util.List;
 
 public class DefaultUserService implements UserService {
-    UserDao userDao = new DefaultUserDao();
+    UserDao userDao;
+
+    public DefaultUserService(UserDao userDao){
+        this.userDao = userDao;
+    }
 
     @Override
     public void addUser(User user) {
